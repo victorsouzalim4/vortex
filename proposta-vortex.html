@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vortex — Proposta do Projeto</title>
+  <style>
+    :root {
+      --bg: #0a0a12;
+      --bg-soft: #11121f;
+      --card: #161728;
+      --card-hover: #1c1d33;
+      --border: #2a2b45;
+      --text: #e8e9f3;
+      --text-soft: #a6a8c4;
+      --muted: #6f7196;
+      --accent: #7c5cff;
+      --accent-2: #28d3c4;
+      --accent-3: #ff4d8d;
+      --glow: rgba(124, 92, 255, 0.35);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+      background:
+        radial-gradient(900px 600px at 80% -10%, rgba(124, 92, 255, 0.18), transparent 60%),
+        radial-gradient(700px 500px at 0% 10%, rgba(40, 211, 196, 0.12), transparent 55%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+    /* ===== Header / Hero ===== */
+    header.hero {
+      padding: 96px 0 72px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-logo {
+      display: block;
+      width: min(420px, 80vw);
+      height: auto;
+      margin: 0 auto 28px;
+      filter: drop-shadow(0 18px 50px rgba(124, 92, 255, 0.35));
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      background: rgba(40, 211, 196, 0.08);
+      border: 1px solid rgba(40, 211, 196, 0.25);
+      padding: 7px 16px;
+      border-radius: 999px;
+      margin-bottom: 28px;
+    }
+
+    .badge::before {
+      content: "";
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent-2);
+      box-shadow: 0 0 10px var(--accent-2);
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    h1 {
+      font-size: clamp(2.6rem, 7vw, 4.6rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      background: linear-gradient(120deg, #fff 10%, var(--accent) 55%, var(--accent-2) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 20px;
+    }
+
+    .hero p.lead {
+      font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+      color: var(--text-soft);
+      max-width: 720px;
+      margin: 0 auto 36px;
+    }
+
+    .hero .cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-block;
+      padding: 13px 26px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.98rem;
+      text-decoration: none;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .btn-primary {
+      background: linear-gradient(120deg, var(--accent), #9d7bff);
+      color: #fff;
+      box-shadow: 0 12px 30px -10px var(--glow);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -12px var(--glow); }
+    .btn-ghost {
+      border: 1px solid var(--border);
+      color: var(--text-soft);
+      background: rgba(255,255,255,0.02);
+    }
+    .btn-ghost:hover { transform: translateY(-2px); border-color: var(--accent); color: var(--text); }
+
+    /* ===== Sections ===== */
+    section { padding: 64px 0; }
+    .section-head { text-align: center; max-width: 680px; margin: 0 auto 52px; }
+    .eyebrow {
+      font-size: 0.82rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    h2 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      margin-bottom: 16px;
+    }
+    .section-head p { color: var(--text-soft); font-size: 1.05rem; }
+
+    /* ===== Problem / Solution split ===== */
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 32px;
+    }
+    .panel h3 { font-size: 1.25rem; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+    .panel.problem h3 { color: var(--accent-3); }
+    .panel.solution h3 { color: var(--accent-2); }
+    .panel ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .panel li { color: var(--text-soft); padding-left: 26px; position: relative; }
+    .panel.problem li::before { content: "✕"; position: absolute; left: 0; color: var(--accent-3); font-weight: 700; }
+    .panel.solution li::before { content: "✓"; position: absolute; left: 0; color: var(--accent-2); font-weight: 700; }
+
+    /* ===== Pipeline (regra de negócio) ===== */
+    .pipeline { display: flex; flex-direction: column; gap: 28px; }
+    .stage {
+      display: grid;
+      grid-template-columns: 84px 1fr;
+      gap: 24px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 30px 32px;
+      position: relative;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+    .stage:hover { transform: translateY(-4px); border-color: var(--accent); background: var(--card-hover); }
+    .stage-num {
+      width: 72px; height: 72px;
+      border-radius: 18px;
+      display: grid; place-items: center;
+      font-size: 1.8rem; font-weight: 800;
+      color: #fff;
+    }
+    .s1 .stage-num { background: linear-gradient(135deg, var(--accent-3), #ff7ba8); box-shadow: 0 10px 26px -10px rgba(255,77,141,0.6); }
+    .s2 .stage-num { background: linear-gradient(135deg, var(--accent), #9d7bff); box-shadow: 0 10px 26px -10px var(--glow); }
+    .s3 .stage-num { background: linear-gradient(135deg, var(--accent-2), #4be8da); box-shadow: 0 10px 26px -10px rgba(40,211,196,0.5); }
+
+    .stage-body h3 { font-size: 1.35rem; margin-bottom: 6px; }
+    .stage-tag {
+      display: inline-block;
+      font-size: 0.74rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .stage-body p { color: var(--text-soft); margin-bottom: 14px; }
+    .stage-rule {
+      background: rgba(124, 92, 255, 0.06);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 10px 10px 0;
+      padding: 12px 16px;
+      font-size: 0.92rem;
+      color: var(--text-soft);
+    }
+    .stage-rule b { color: var(--text); }
+
+    .connector {
+      text-align: center;
+      color: var(--muted);
+      font-size: 1.4rem;
+      margin: -14px 0;
+    }
+
+    /* ===== Output deliverables ===== */
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 26px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .card:hover { transform: translateY(-4px); border-color: var(--accent-2); }
+    .card .ico { font-size: 1.7rem; margin-bottom: 14px; }
+    .card h4 { font-size: 1.08rem; margin-bottom: 8px; }
+    .card p { color: var(--text-soft); font-size: 0.94rem; }
+
+    /* ===== Value / closing ===== */
+    .value {
+      background: linear-gradient(135deg, rgba(124,92,255,0.12), rgba(40,211,196,0.08));
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 56px 40px;
+      text-align: center;
+    }
+    .value h2 { margin-bottom: 18px; }
+    .value p { color: var(--text-soft); max-width: 760px; margin: 0 auto; font-size: 1.1rem; }
+    .value .highlight { color: var(--accent-2); font-weight: 700; }
+
+    /* ===== Footer ===== */
+    footer {
+      text-align: center;
+      padding: 48px 0 56px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
+    }
+    footer .footer-logo { width: 160px; height: auto; margin: 0 auto 14px; display: block; opacity: 0.92; }
+    footer .logo { font-weight: 800; color: var(--text); letter-spacing: 0.04em; }
+
+    @media (max-width: 760px) {
+      .split, .grid-3 { grid-template-columns: 1fr; }
+      .stage { grid-template-columns: 1fr; }
+      .stage-num { width: 60px; height: 60px; font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="wrap">
+      <img class="hero-logo" src="assets/vortex-logo.png" alt="Logo do projeto Vortex" />
+      <span class="badge">Inteligência de tendências em tempo real</span>
+      <h1>Projeto Vortex</h1>
+      <p class="lead">
+        A esteira inteligente que transforma o caos das discussões da internet em uma
+        linha de produção previsível e automatizada de roteiros altamente engajantes.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#regra-negocio">Ver a regra de negócio</a>
+        <a class="btn btn-ghost" href="#valor">Por que importa</a>
+      </div>
+    </div>
+  </header>
+
+  <section id="visao">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">A proposta</div>
+        <h2>O assunto certo, no momento certo</h2>
+        <p>
+          O Vortex monitora o que as pessoas estão falando nas redes sociais — como
+          YouTube e TikTok — em tempo real, para descobrir tendências de conteúdo
+          <b>antes de todo mundo</b> e gerar roteiros automáticos.
+        </p>
+      </div>
+
+      <div class="split">
+        <div class="panel problem">
+          <h3>O problema hoje</h3>
+          <ul>
+            <li>Horas navegando manualmente para adivinhar o que está viralizando.</li>
+            <li>Você descobre a tendência tarde demais, quando já saturou.</li>
+            <li>Processo imprevisível, baseado em sorte e intuição.</li>
+            <li>Tempo gasto em pesquisa em vez de criação.</li>
+          </ul>
+        </div>
+        <div class="panel solution">
+          <h3>Com o Vortex</h3>
+          <ul>
+            <li>O sistema faz o trabalho pesado de monitoramento por você.</li>
+            <li>Tendências detectadas no início da curva de crescimento.</li>
+            <li>Linha de produção automatizada e previsível de roteiros.</li>
+            <li>Você foca em postar; o Vortex cuida do "sobre o quê".</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="regra-negocio">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Regra de negócio</div>
+        <h2>Três etapas, do ruído ao roteiro</h2>
+        <p>O coração do Vortex é um fluxo de negócio em três estágios bem definidos.</p>
+      </div>
+
+      <div class="pipeline">
+        <div class="stage s1">
+          <div class="stage-num">1</div>
+          <div class="stage-body">
+            <span class="stage-tag">Coleta &amp; Filtragem</span>
+            <h3>O Funil de Atenção</h3>
+            <p>
+              O sistema puxa milhares de comentários e discussões das redes sociais
+              e filtra tudo. O que é ruído ou repetição é descartado; o que é
+              relevante é separado.
+            </p>
+            <div class="stage-rule">
+              <b>Regra:</b> todo conteúdo bruto passa por um filtro de relevância.
+              Apenas sinais úteis avançam para a próxima etapa — ruído e duplicidade
+              nunca seguem adiante.
+            </div>
+          </div>
+        </div>
+
+        <div class="connector">↓</div>
+
+        <div class="stage s2">
+          <div class="stage-num">2</div>
+          <div class="stage-body">
+            <span class="stage-tag">Análise noturna</span>
+            <h3>O Detector de Tendências</h3>
+            <p>
+              Durante a madrugada, o sistema analisa tudo o que foi separado e percebe
+              se existe um novo assunto ganhando força. Quando muitas pessoas começam
+              a falar sobre um nicho específico, o sistema "acorda", identifica esse
+              novo grupo de interesse e dá um nome a ele.
+            </p>
+            <div class="stage-rule">
+              <b>Regra:</b> um novo agrupamento de interesse só é promovido a
+              "tendência" quando atinge massa crítica de discussão. Ao ser validado,
+              recebe um nome descritivo — ex.:
+              <b>"Nova polêmica sobre ferramentas de IA para Devs"</b>.
+            </div>
+          </div>
+        </div>
+
+        <div class="connector">↓</div>
+
+        <div class="stage s3">
+          <div class="stage-num">3</div>
+          <div class="stage-body">
+            <span class="stage-tag">Geração de estratégia</span>
+            <h3>Fábrica de Conteúdo</h3>
+            <p>
+              Com a tendência validada, o motor de estratégia entra em ação e gera
+              automaticamente o pacote completo para o criador de conteúdo.
+            </p>
+            <div class="stage-rule">
+              <b>Regra:</b> toda tendência validada gera um entregável completo e
+              pronto para uso — sem etapas manuais entre a detecção e o roteiro final.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="entregaveis">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">O entregável</div>
+        <h2>O pacote que o criador recebe</h2>
+        <p>Tudo o que a Fábrica de Conteúdo produz automaticamente a cada tendência.</p>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="ico">🎬</div>
+          <h4>Roteiro estruturado</h4>
+          <p>O roteiro completo do vídeo, organizado e pronto para gravação.</p>
+        </div>
+        <div class="card">
+          <div class="ico">🪝</div>
+          <h4>Gancho inicial</h4>
+          <p>A abertura pensada para prender a atenção do público logo nos primeiros segundos.</p>
+        </div>
+        <div class="card">
+          <div class="ico">💡</div>
+          <h4>Títulos &amp; thumbnails</h4>
+          <p>Ideias de títulos e thumbnails para maximizar cliques e alcance.</p>
+        </div>
+        <div class="card">
+          <div class="ico">🌡️</div>
+          <h4>Nota de relevância</h4>
+          <p>Um indicador de o quão "quente" está aquele assunto no momento.</p>
+        </div>
+        <div class="card">
+          <div class="ico">⏱️</div>
+          <h4>Timing certo</h4>
+          <p>O conteúdo chega enquanto a tendência ainda está no início da curva.</p>
+        </div>
+        <div class="card">
+          <div class="ico">⚙️</div>
+          <h4>Tudo automático</h4>
+          <p>Do comentário bruto ao pacote final, sem trabalho manual no caminho.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="valor">
+    <div class="wrap">
+      <div class="value">
+        <h2>Por que o Vortex importa</h2>
+        <p>
+          Em resumo, o Vortex transforma o caos das discussões da internet em uma
+          <span class="highlight">linha de produção previsível e automatizada</span>
+          de roteiros altamente engajantes — garantindo que você poste sempre sobre o
+          <span class="highlight">assunto certo, no momento certo</span>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <img class="footer-logo" src="assets/vortex-logo.png" alt="Logo do projeto Vortex" />
+      <div class="logo">PROJETO Vortex</div>
+      <p>Esteira inteligente de tendências e roteiros · Proposta do projeto</p>
+    </div>
+  </footer>
+
+</body>
+</html>
